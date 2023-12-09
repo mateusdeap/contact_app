@@ -1,0 +1,39 @@
+<h1>Contact List</h1>
+<form action="/contacts" method="get" class="tool-bar">
+  <label for="search">Search Term</label>
+  <input id="search" type="search" name="q" value={@conn.query_params["q"] || ""} />
+  <input type="submit" value="Search" />
+</form>
+<table>
+  <thead>
+    <tr>
+      <th>First</th>
+      <th>Last</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for contact <- @contacts do %>
+      <tr>
+        <td><%= contact.first_name %></td>
+        <td><%= contact.last_name %></td>
+        <td><%= contact.phone %></td>
+        <td><%= contact.email %></td>
+        <td>
+          <a href={"/contacts/#{contact.id}/edit"} >Edit</a>
+          <a href={"/contacts/#{contact.id}"}>View</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+  <a href={"/contacts/new"}>Add Contact</a>
+</p>
+<div id="main">
+  <button hx-get="/contacts" hx-target="#main" hx-swap="outerHTML" hx-trigger="click, keyup[ctrlKey && key == 'l'] from:body">
+    Get the contacts
+  </button>
+</div>

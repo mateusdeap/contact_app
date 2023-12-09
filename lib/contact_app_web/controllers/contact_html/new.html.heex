@@ -1,0 +1,30 @@
+<form action="/contacts/new" method="post">
+  <input type="hidden" value={@token} name="_csrf_token" />
+  <fieldset>
+    <legend>Contact Values</legend>
+    <p>
+      <label for="email">Email</label>
+      <input name="contact[email]" id="email" type="email" placeholder="Email" value={@changeset.changes[:email] || ""} />
+      <span class="error"><%= get_errors_for(@changeset, :email) %></span>
+    </p>
+    <p>
+      <label for="first_name">First Name</label>
+      <input name="contact[first_name]" id="first_name" type="first_name" placeholder="First Name" value={@changeset.changes[:first_name] || ""} />
+      <span class="error"><%= get_errors_for(@changeset, :first_name) %></span>
+    </p>
+    <p>
+      <label for="last_name">Last Name</label>
+      <input name="contact[last_name]" id="last_name" type="last_name" placeholder="Last Name" value={@changeset.changes[:last_name] || ""} />
+      <span class="error"><%= get_errors_for(@changeset, :last_name) %></span>
+    </p>
+    <p>
+      <label for="phone">Phone</label>
+      <input name="contact[phone]" id="phone" type="phone" placeholder="Phone" value={@changeset.changes[:phone] || ""} />
+      <span class="error"><%= get_errors_for(@changeset, :phone) %></span>
+    </p>
+    <button>Save</button>
+  </fieldset>
+</form>
+<p>
+  <a href="/contacts">Back</a>
+</p>
