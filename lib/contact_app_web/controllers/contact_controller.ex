@@ -58,6 +58,7 @@ defmodule ContactAppWeb.ContactController do
 
     conn
     |> put_flash(:info, "Contact deleted successfully.")
+    |> put_status(303)
     |> redirect(to: ~p"/contacts")
   end
 end

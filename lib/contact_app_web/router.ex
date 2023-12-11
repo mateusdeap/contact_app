@@ -24,7 +24,7 @@ defmodule ContactAppWeb.Router do
     get "/contacts/:id", ContactController, :show
     get "/contacts/:id/edit", ContactController, :edit
     post "/contacts/:id/edit", ContactController, :update
-    post "/contacts/:id/delete", ContactController, :delete
+    delete "/contacts/:id", ContactController, :delete
   end
 
   # Other scopes may use custom stacks.
