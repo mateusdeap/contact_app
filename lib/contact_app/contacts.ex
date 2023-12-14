@@ -5,6 +5,13 @@ defmodule ContactApp.Contacts do
   alias ContactApp.Contacts.Contact
 
   def list_contacts(""), do: Repo.all(Contact)
+  def list_contacts(page) if is_integer(page) do
+    Repo.all(
+      from c in Contact,
+        limit: 10,
+        offset: ^page*10
+    )
+  end
   def list_contacts(query) do
     Repo.all(
       from c in Contact,

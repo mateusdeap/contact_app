@@ -29,6 +29,16 @@
     <% end %>
   </tbody>
 </table>
+<div>
+  <span style="float: right">
+    <%= if @page > 1 do %>
+      <a href={"/contacts?page=#{@page - 1}"}>Previous</a>
+    <% end %>
+    <%= if length(@contacts) >= 10 do %>
+      <a href={"/contacts?page=#{@page + 1}"}>Next</a>
+    <% end %>
+  </span>
+</div>
 <p>
   <a href={"/contacts/new"}>Add Contact</a>
 </p>

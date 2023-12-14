@@ -4,15 +4,24 @@ defmodule ContactAppWeb.ContactController do
   alias ContactApp.Contacts
   alias ContactApp.Contacts.Contact
   
-  def index(conn, _params) do
+  def index(conn, %{}) do
     contacts = Contacts.list_contacts("")
-    render(conn, :index, contacts: contacts)
+    render(conn, :index, contacts: contacts, page: 1)
+  end
+  def index(conn, %{"page" => page}) do
+    page = String.to_integer(page)
+    contacts = Contacts.list_contacts(page)
+    render(conn, :index, contacts: contacts, page: page)
+  end
+  def index(conn, %{"q" => q, "page" => page}) do
+    contacts = Contacts.list_contacts("")
+    page = String.to_integer(page)
+    render(conn, :index, contacts: contacts, page: page)
   end
 
   def new(conn, _params) do
     changeset = Contacts.change_contact(%Contact{})
-    csrf_token = get_csrf_token()
-    render(conn, :new, changeset: changeset, token: csrf_token)
+    render(conn, :new, changeset: changeset)
   end
 
   def email(conn, %{"contact" => contact_params}) do

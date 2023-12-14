@@ -16,5 +16,7 @@ defmodule ContactApp.Contacts.Contact do
     contact
     |> cast(attrs, [:first_name, :last_name, :phone, :email])
     |> validate_required([:first_name, :last_name, :phone, :email])
+    |> unsafe_validate_unique(:email, ContactApp.Repo)
+    |> unique_constraint(:email)
   end
 end

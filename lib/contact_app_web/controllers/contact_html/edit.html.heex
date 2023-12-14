@@ -7,7 +7,7 @@
       <input name="contact[email]" id="email" type="email"
             hx-get={~p"/contacts/email"}
             hx-target="next .error"
-            hx-trigger="change, keyup"
+            hx-trigger="change, keyup delay:300ms changed"
             placeholder="Email"
             value={@contact.email} />
       <span class="error"><%= get_errors_for(@changeset, :email) %></span>
