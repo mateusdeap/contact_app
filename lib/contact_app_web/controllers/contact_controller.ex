@@ -15,6 +15,11 @@ defmodule ContactAppWeb.ContactController do
     render(conn, :new, changeset: changeset, token: csrf_token)
   end
 
+  def email(conn, %{"contact" => contact_params}) do
+    changeset = Contacts.change_contact(%Contact{}, contact_params)
+    text(conn, get_errors_for(changeset, :email))
+  end
+
   def create(conn, %{"contact" => contact_params}) do
     case Contacts.create_contact(contact_params) do
       {:ok, _} ->
@@ -60,5 +65,15 @@ defmodule ContactAppWeb.ContactController do
     |> put_flash(:info, "Contact deleted successfully.")
     |> put_status(303)
     |> redirect(to: ~p"/contacts")
+  end
+
+  def get_errors_for(changeset, attribute) do
+    case changeset.errors[attribute] do
+      {message, _} ->
+        attribute_name = Atom.to_string(attribute) |> String.capitalize()
+        "#{attribute_name} #{message}"
+
+      nil -> ""
+    end
   end
 end

@@ -21,6 +21,7 @@ defmodule ContactAppWeb.Router do
     get "/contacts", ContactController, :index
     get "/contacts/new", ContactController, :new
     post "/contacts/new", ContactController, :create
+    get "/contacts/email", ContactController, :email
     get "/contacts/:id", ContactController, :show
     get "/contacts/:id/edit", ContactController, :edit
     post "/contacts/:id/edit", ContactController, :update

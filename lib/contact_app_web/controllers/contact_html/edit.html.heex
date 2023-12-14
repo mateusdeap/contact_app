@@ -1,10 +1,15 @@
 <form action={~p"/contacts/#{@contact.id}/edit"} method="post">
-  <input type="hidden" value={@token} name="_csrf_token" />
+  <input type="hidden" value={get_csrf_token()} name="_csrf_token" />
   <fieldset>
     <legend>Contact Values</legend>
     <p>
       <label for="email">Email</label>
-      <input name="contact[email]" id="email" type="email" placeholder="Email" value={@contact.email} />
+      <input name="contact[email]" id="email" type="email"
+            hx-get={~p"/contacts/email"}
+            hx-target="next .error"
+            hx-trigger="change, keyup"
+            placeholder="Email"
+            value={@contact.email} />
       <span class="error"><%= get_errors_for(@changeset, :email) %></span>
     </p>
     <p>
