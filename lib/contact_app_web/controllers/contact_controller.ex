@@ -4,12 +4,8 @@ defmodule ContactAppWeb.ContactController do
   alias ContactApp.Contacts
   alias ContactApp.Contacts.Contact
   
-  def index(conn, %{}) do
-    contacts = Contacts.list_contacts("")
-    render(conn, :index, contacts: contacts, page: 1)
-  end
-  def index(conn, %{"page" => page}) do
-    page = String.to_integer(page)
+  def index(conn, %{"page" => page_param}) do
+    page = String.to_integer(page_param)
     contacts = Contacts.list_contacts(page)
     render(conn, :index, contacts: contacts, page: page)
   end
@@ -17,6 +13,10 @@ defmodule ContactAppWeb.ContactController do
     contacts = Contacts.list_contacts("")
     page = String.to_integer(page)
     render(conn, :index, contacts: contacts, page: page)
+  end
+  def index(conn, %{}) do
+    contacts = Contacts.list_contacts(1)
+    render(conn, :index, contacts: contacts, page: 1)
   end
 
   def new(conn, _params) do
