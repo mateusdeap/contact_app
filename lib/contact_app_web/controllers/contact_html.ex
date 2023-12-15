@@ -13,4 +13,21 @@ defmodule ContactAppWeb.ContactHTML do
       nil -> ""
     end
   end
+
+  def rows(assigns) do
+    ~H"""
+    <%= for contact <- @contacts do %>
+      <tr>
+        <td><%= contact.first_name %></td>
+        <td><%= contact.last_name %></td>
+        <td><%= contact.phone %></td>
+        <td><%= contact.email %></td>
+        <td>
+          <a href={"/contacts/#{contact.id}/edit"} >Edit</a>
+          <a href={"/contacts/#{contact.id}"}>View</a>
+        </td>
+      </tr>
+    <% end %>
+    """
+  end
 end
