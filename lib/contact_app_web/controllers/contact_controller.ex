@@ -9,10 +9,9 @@ defmodule ContactAppWeb.ContactController do
     contacts = Contacts.list_contacts(page)
     render(conn, :index, contacts: contacts, page: page)
   end
-  def index(conn, %{"q" => q, "page" => page}) do
-    contacts = Contacts.list_contacts("")
-    page = String.to_integer(page)
-    render(conn, :index, contacts: contacts, page: page)
+  def index(conn, %{"q" => q}) do
+    contacts = Contacts.list_contacts(q)
+    render(conn, :index, contacts: contacts)
   end
   def index(conn, %{}) do
     contacts = Contacts.list_contacts(1)

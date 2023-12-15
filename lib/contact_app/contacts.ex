@@ -11,8 +11,8 @@ defmodule ContactApp.Contacts do
   def list_contacts(query) do
     Repo.all(
       from c in Contact,
-        where: like(c.first_name, ^query),
-        or_where: like(c.last_name, ^query)
+        where: ilike(c.first_name, ^"%#{query}%"),
+        or_where: ilike(c.last_name, ^"%#{query}%")
     )
   end
 
