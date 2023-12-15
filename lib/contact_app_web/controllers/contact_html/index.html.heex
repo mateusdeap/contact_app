@@ -5,7 +5,10 @@
         value={@conn.query_params["q"] || ""}
         hx-get={~p"/contacts"}
         hx-trigger="search, keyup delay:200ms changed"
-        hx-target="tbody"/>
+        hx-target="tbody"
+        hx-push-url="true"
+        hx-indicator="#spinner"/>
+  <img id="spinner" class="htmx-indicator" src="/images/bars-fade.svg" alt="Request In Flight..." />
   <input type="submit" value="Search" />
 </form>
 <table>
@@ -25,8 +28,3 @@
 <p>
   <a href={"/contacts/new"}>Add Contact</a>
 </p>
-<div id="main">
-  <button hx-get="/contacts" hx-target="#main" hx-swap="outerHTML" hx-trigger="click, keyup[ctrlKey && key == 'l'] from:body">
-    Get the contacts
-  </button>
-</div>

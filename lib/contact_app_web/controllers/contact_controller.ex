@@ -12,8 +12,10 @@ defmodule ContactAppWeb.ContactController do
   def index(conn, %{"q" => q}) do
     contacts = Contacts.list_contacts(q)
     case Plug.Conn.get_req_header(conn, "hx-trigger") do
-      ["search"] -> render(conn, :rows, contacts: contacts, layout: false)
       [] -> render(conn, :index, contacts: contacts)
+      ["search"] ->
+        put_root_layout(conn, false)
+        |> render(:rows, contacts: contacts, layout: false)
     end
   end
   def index(conn, %{}) do
