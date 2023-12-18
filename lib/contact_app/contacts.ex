@@ -37,4 +37,9 @@ defmodule ContactApp.Contacts do
   def change_contact(%Contact{} = contact, attrs \\ %{}) do
     Contact.changeset(contact, attrs)
   end
+
+  def count() do
+    from(c in Contact, select: count(c))
+    |> Repo.one
+  end
 end

@@ -23,6 +23,11 @@ defmodule ContactAppWeb.ContactController do
     render(conn, :index, contacts: contacts, page: 1)
   end
 
+  def count(conn, _params) do
+    count = Contacts.count()
+    text(conn, "(#{count} total Contacts)")
+  end
+
   def new(conn, _params) do
     changeset = Contacts.change_contact(%Contact{})
     render(conn, :new, changeset: changeset)
@@ -74,10 +79,16 @@ defmodule ContactAppWeb.ContactController do
     contact = Contacts.get_contact!(id)
     {:ok, _contact} = Contacts.delete_contact(contact)
 
-    conn
-    |> put_flash(:info, "Contact deleted successfully.")
-    |> put_status(303)
-    |> redirect(to: ~p"/contacts")
+    case Plug.Conn.get_req_header(conn, "hx-trigger") do
+      ["delete-btn"] ->
+        conn
+        |> put_flash(:info, "Contact deleted successfully.")
+        |> put_status(303)
+        |> redirect(to: ~p"/contacts")
+
+      [] ->
+        text(conn, "")
+    end
   end
 
   def get_errors_for(changeset, attribute) do
