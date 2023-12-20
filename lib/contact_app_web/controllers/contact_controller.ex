@@ -77,7 +77,7 @@ defmodule ContactAppWeb.ContactController do
 
   def delete(conn, %{"id" => id}) do
     contact = Contacts.get_contact!(id)
-    {:ok, _contact} = Contacts.delete_contact(contact)
+    Contacts.delete_contact(contact)
 
     case Plug.Conn.get_req_header(conn, "hx-trigger") do
       ["delete-btn"] ->
@@ -89,6 +89,17 @@ defmodule ContactAppWeb.ContactController do
       [] ->
         text(conn, "")
     end
+  end
+
+  def delete_all(conn, %{"selected_contact_ids" => contact_ids}) do
+    Enum.each(contact_ids, fn contact_id ->
+      Contacts.get_contact!(contact_id)
+      |> Contacts.delete_contact()
+    end)
+
+    conn
+    |> put_flash(:info, "Contacts deleted successfully")
+    |> render(:index, contacts: Contacts.list_contacts(1), page: 1)
   end
 
   def get_errors_for(changeset, attribute) do

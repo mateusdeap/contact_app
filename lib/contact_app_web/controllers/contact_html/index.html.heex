@@ -11,33 +11,41 @@
   <img id="spinner" class="htmx-indicator" src="/images/bars-fade.svg" alt="Request In Flight..." />
   <input type="submit" value="Search" />
 </form>
-<table>
-  <thead>
-    <tr>
-      <th>First</th>
-      <th>Last</th>
-      <th>Phone</th>
-      <th>Email</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <.rows contacts={@contacts} />
-    <%= if length(@contacts) == 10 do %>
+<form>
+  <table>
+    <thead>
       <tr>
-        <td colspan="5" style="text-align: center">
-          <span hx-target="closest tr"
-                hx-trigger="revealed"
-                hx-swap="outerHTML"
-                hx-select="tbody > tr"
-                hx-get={~p"/contacts?page=#{@page + 1}"}>
-            Load More...
-          </span>
-        </td>
+        <th></th>
+        <th>First</th>
+        <th>Last</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <.rows contacts={@contacts} />
+      <%= if length(@contacts) == 10 do %>
+        <tr>
+          <td colspan="5" style="text-align: center">
+            <span hx-target="closest tr"
+                  hx-trigger="revealed"
+                  hx-swap="outerHTML"
+                  hx-select="tbody > tr"
+                  hx-get={~p"/contacts?page=#{@page + 1}"}>
+              Load More...
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <button hx-delete={~p"/contacts"}
+          hx-confirm="Are you sure you want to delete these contacts?"
+          hx-target="body">
+    Delete Selected Contacts
+  </button>
+</form>
 <p>
   <a href={"/contacts/new"}>Add Contact</a>
   <span hx-get={~p"/contacts/count"} hx-trigger="revealed">

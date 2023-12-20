@@ -19,6 +19,7 @@ defmodule ContactAppWeb.Router do
 
     get "/", PageController, :home
     get "/contacts", ContactController, :index
+    delete "/contacts", ContactController, :delete_all
     get "/contacts/new", ContactController, :new
     post "/contacts/new", ContactController, :create
     get "/contacts/email", ContactController, :email
